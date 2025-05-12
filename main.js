@@ -17,14 +17,14 @@ if (title) {
   }
 }
 
-// Button ripple and glow effect
+// Button ripple, glow, and explode effect
 const buttons = document.querySelectorAll('.infhub-btn');
 buttons.forEach(btn => {
   btn.addEventListener('mousemove', e => {
     const rect = btn.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    btn.style.background = `radial-gradient(circle at ${x}px ${y}px, #00c9a7 0%, #2193b0 80%, #2c5364 100%)`;
+    btn.style.background = `radial-gradient(circle at ${x}px ${y}px, #00ffb0 0%, #00c96b 80%, #0f4027 100%)`;
   });
   btn.addEventListener('mouseleave', () => {
     btn.style.background = '';
@@ -38,4 +38,25 @@ buttons.forEach(btn => {
     btn.appendChild(ripple);
     setTimeout(()=>ripple.remove(), 700);
   });
+  // Explode effect
+  btn.addEventListener('mouseenter', () => {
+    btn.classList.add('explode');
+    setTimeout(()=>btn.classList.remove('explode'), 600);
+  });
 });
+
+// Fill background with animated green shapes
+const bgAnim = document.querySelector('.bg-anim');
+if (bgAnim) {
+  for (let i = 0; i < 14; i++) {
+    const shape = document.createElement('span');
+    shape.className = 'bg-shape';
+    shape.style.left = Math.random()*100 + '%';
+    shape.style.top = Math.random()*100 + '%';
+    shape.style.width = (60 + Math.random()*120) + 'px';
+    shape.style.height = shape.style.width;
+    shape.style.opacity = 0.15 + Math.random()*0.18;
+    shape.style.animationDelay = (Math.random()*12) + 's';
+    bgAnim.appendChild(shape);
+  }
+}
