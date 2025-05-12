@@ -33,8 +33,21 @@ if (title) {
 buttons.forEach((btn, i) => {
   btn.style.animation = `teleBtn 2.5s ${0.15*i}s cubic-bezier(.7,-0.3,.3,1.3) infinite alternate`;
   // Restore explosion effect
-  btn.addEventListener('mouseenter', () => {
+  btn.addEventListener('mouseenter', (e) => {
     btn.classList.add('explode');
+    // Page-wide explosion
+    const explosion = document.createElement('div');
+    explosion.className = 'page-explosion';
+    // Position explosion at button center
+    const rect = btn.getBoundingClientRect();
+    const cx = rect.left + rect.width/2 + window.scrollX;
+    const cy = rect.top + rect.height/2 + window.scrollY;
+    explosion.style.left = cx + 'px';
+    explosion.style.top = cy + 'px';
+    document.body.appendChild(explosion);
+    setTimeout(()=>{
+      explosion.remove();
+    }, 700);
     setTimeout(()=>btn.classList.remove('explode'), 700);
   });
 });
