@@ -25,10 +25,8 @@ const buttons = document.querySelectorAll('.infhub-btn');
 if (container) {
   container.style.animation = 'floatTeleport 3.6s ease-in-out infinite alternate';
 }
-// Floating animation for title
-if (title) {
-  title.style.animation = 'teleTitle 2.2s cubic-bezier(.7,-0.3,.3,1.3) infinite alternate';
-}
+// Title remains static (no floating animation)
+
 // Floating animation for buttons (with delay for "train" effect)
 buttons.forEach((btn, i) => {
   btn.style.animation = `teleBtn 2.5s ${0.15*i}s cubic-bezier(.7,-0.3,.3,1.3) infinite alternate`;
