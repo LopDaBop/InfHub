@@ -1,22 +1,41 @@
-// Add a little sparkly effect to the title
+// Add epic sparkly, wavy, and glow effects to the title
 const title = document.querySelector('.title');
 if (title) {
+  // Sparkle effect
   setInterval(() => {
-    title.style.textShadow = `0 0 ${Math.random()*40+10}px #ffc371, 0 0 10px #ff5f6d`;
-    setTimeout(()=>{title.style.textShadow = '';}, 300);
-  }, 1400);
+    title.style.textShadow = `0 0 ${Math.random()*40+10}px #00c9a7, 0 0 12px #2193b0, 0 0 18px #00c9a799`;
+    setTimeout(()=>{title.style.textShadow = '';}, 350);
+  }, 1200);
+
+  // Floating sparkles
+  for (let i = 0; i < 12; i++) {
+    const sparkle = document.createElement('span');
+    sparkle.className = 'title-sparkle';
+    sparkle.style.left = Math.random()*90 + '%';
+    sparkle.style.animationDelay = `${Math.random()*4}s`;
+    title.appendChild(sparkle);
+  }
 }
 
-// Button pop effect
+// Button ripple and glow effect
 const buttons = document.querySelectorAll('.infhub-btn');
 buttons.forEach(btn => {
   btn.addEventListener('mousemove', e => {
     const rect = btn.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    btn.style.background = `radial-gradient(circle at ${x}px ${y}px, #ffc371 0%, #ff5f6d 80%, #1e1e60 100%)`;
+    btn.style.background = `radial-gradient(circle at ${x}px ${y}px, #00c9a7 0%, #2193b0 80%, #2c5364 100%)`;
   });
   btn.addEventListener('mouseleave', () => {
     btn.style.background = '';
+  });
+  // Ripple effect
+  btn.addEventListener('click', e => {
+    const ripple = document.createElement('span');
+    ripple.className = 'btn-ripple';
+    ripple.style.left = `${e.clientX - btn.getBoundingClientRect().left}px`;
+    ripple.style.top = `${e.clientY - btn.getBoundingClientRect().top}px`;
+    btn.appendChild(ripple);
+    setTimeout(()=>ripple.remove(), 700);
   });
 });
