@@ -41,7 +41,22 @@ buttons.forEach(btn => {
   // Explode effect
   btn.addEventListener('mouseenter', () => {
     btn.classList.add('explode');
-    setTimeout(()=>btn.classList.remove('explode'), 600);
+    // Splashy blue particles
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('span');
+      p.className = 'splash-particle';
+      const angle = (Math.PI * 2 * i) / 14 + Math.random()*0.3;
+      const dist = 60 + Math.random()*30;
+      p.style.setProperty('--tx', `${Math.cos(angle)*dist}px`);
+      p.style.setProperty('--ty', `${Math.sin(angle)*dist}px`);
+      p.style.width = (10 + Math.random()*18) + 'px';
+      p.style.height = p.style.width;
+      p.style.left = '50%';
+      p.style.top = '50%';
+      btn.appendChild(p);
+      setTimeout(()=>p.remove(), 700);
+    }
+    setTimeout(()=>btn.classList.remove('explode'), 700);
   });
 });
 
