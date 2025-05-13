@@ -24,15 +24,17 @@ const buttons = document.querySelectorAll('.infhub-btn');
 const bubblePositions = [];
 
 buttons.forEach((btn, i) => {
-  const textSize = btn.textContent.length;
-  const size = Math.random() * 30 + 80 + (textSize * 5); // Random size based on text length
+  const size = Math.random() * 30 + 80; // Random size between 80px and 110px
   btn.style.width = `${size}px`;
   btn.style.height = `${size}px`;
-  btn.style.animation = `floatBubble 3s ease-in-out infinite alternate`;
+  btn.style.position = 'absolute';
+  const initialX = Math.random() * (container.clientWidth - size);
+  const initialY = Math.random() * (container.clientHeight - size);
+  btn.style.transform = `translate(${initialX}px, ${initialY}px)`;
   bubblePositions.push({
     element: btn,
-    position: { x: 0, y: 0 },
-    velocity: { x: Math.random() * 2 - 1, y: Math.random() * 2 - 1 }
+    position: { x: initialX, y: initialY },
+    velocity: { x: (Math.random() - 0.5) * 2, y: (Math.random() - 0.5) * 2 }
   });
 });
 
