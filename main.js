@@ -28,8 +28,14 @@ buttons.forEach((btn, i) => {
   btn.style.width = `${size}px`;
   btn.style.height = `${size}px`;
   btn.style.position = 'absolute';
-  const initialX = Math.random() * (container.clientWidth - size);
-  const initialY = Math.random() * (container.clientHeight - size);
+  let initialX, initialY;
+  do {
+    initialX = Math.random() * (container.clientWidth - size);
+    initialY = Math.random() * (container.clientHeight - size);
+  } while (bubblePositions.some(bubble => {
+    const { position } = bubble;
+    return Math.abs(position.x - initialX) < size && Math.abs(position.y - initialY) < size;
+  }));
   btn.style.transform = `translate(${initialX}px, ${initialY}px)`;
   bubblePositions.push({
     element: btn,
