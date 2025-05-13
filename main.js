@@ -16,15 +16,58 @@
   }
 })();
 
-// Animate main objects (container, title, buttons) to float up/down in a looping, teleporter/train-like vibe
+// Random floating movement for buttons
 const container = document.querySelector('.container');
 const title = document.querySelector('.title');
 const buttons = document.querySelectorAll('.infhub-btn');
+
+const bubblePositions = [];
+
+buttons.forEach((btn, i) => {
+  const textSize = btn.textContent.length;
+  const size = Math.random() * 30 + 80 + (textSize * 5); // Random size based on text length
+  btn.style.width = `${size}px`;
+  btn.style.height = `${size}px`;
+  btn.style.animation = `floatBubble 3s ease-in-out infinite alternate`;
+  bubblePositions.push({
+    element: btn,
+    position: { x: 0, y: 0 },
+    velocity: { x: Math.random() * 2 - 1, y: Math.random() * 2 - 1 }
+  });
+});
+
+function updateBubblePositions() {
+  bubblePositions.forEach(bubble => {
+    const { element, position, velocity } = bubble;
+    position.x += velocity.x;
+    position.y += velocity.y;
+
+    // Collision detection and response
+    if (position.x + element.clientWidth > container.clientWidth || position.x < 0) {
+      velocity.x *= -1;
+    }
+    if (position.y + element.clientHeight > container.clientHeight || position.y < 0) {
+      velocity.y *= -1;
+    }
+
+    // Prevent overlap with title
+    if (position.y < title.clientHeight) {
+      position.y = title.clientHeight;
+    }
+
+    element.style.transform = `translate(${position.x}px, ${position.y}px)`;
+  });
+}
+
+setInterval(updateBubblePositions, 16); // 60fps
+
+// Title remains static (no floating animation)
 
 // Floating animation for container
 if (container) {
   container.style.animation = 'floatTeleport 3.6s ease-in-out infinite alternate';
 }
+
 // Title remains static (no floating animation)
 
 // Floating animation for buttons (with delay for "train" effect)
